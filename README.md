@@ -28,6 +28,7 @@ In case you want to use it in a commercial project you can write an email.
 
 
 ### Requirements
+* Linux OS
 * Python2 >= 2.7 or Python3 (Warning: Python2 will soon become deprecated.)
 * matplotlib
 * numpy
