@@ -1,0 +1,17 @@
+.cache/
+.idea/
+__pycache__
+*.pyc
+.settings
+.project
+.pydevproject
+build/
+dist/
+*.egg-info/*
+.pytest_cache
+venv
+.coverage
+htmlcov
+test/**/*.png
+update_dependencies.sh
+

@@ -1,0 +1,2 @@
+* Various changes. Added license. Codescanner core fully thread-safe. Introduced the optional aggressive switch which makes CS find more machinecode regions at the cost of more False Positives. (10. Dec 2020)
+* 18. Sept 2019: Now parses all Non-Intel architectures correctly (important bug fix).
