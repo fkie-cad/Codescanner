@@ -49,7 +49,7 @@ def init():
     global libcodescan
     selfDirectory = os.path.dirname(os.path.realpath(__file__))
     libcodescan_path = os.path.join(selfDirectory, 'res/lib', 'libcodescan.so')
-    lang_path = os.path.join(selfDirectory, 'res/lib', 'languages')
+    lang_path = os.path.join(selfDirectory, 'res/lib')
     
     try:
         libcodescan = ctypes.CDLL(libcodescan_path)
@@ -57,8 +57,8 @@ def init():
         print("Loading libcodescan.so failed! Expected path: %s." % (libcodescan_path))
         sys.exit()
 
-    libcodescan.initLangPath.argtypes = [ctypes.c_char_p]
-    libcodescan.initLangPath.restype = ctypes.c_int
+    libcodescan.setLangPath.argtypes = [ctypes.c_char_p]
+    libcodescan.setLangPath.restype = ctypes.c_int
 
     libcodescan.free_CodescanOutput.argtypes = [ctypes.c_void_p]
     libcodescan.free_CodescanOutput.restype = None
@@ -67,7 +67,7 @@ def init():
     libcodescan.new_CodescanOutput.restype = ctypes.c_int
 
     c_lang_path = ctypes.c_char_p(lang_path.encode("utf-8"))
-    status = libcodescan.initLangPath(c_lang_path)
+    status = libcodescan.setLangPath(c_lang_path)
     
     if (status != 0):
         print("Core error %d (fatal): loading language files failed! Expected path: %s." % (status,lang_path))

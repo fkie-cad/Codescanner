@@ -3,10 +3,10 @@
 The Codescanner detects machine code in files and identifies the cpu architecture, endianness, and bitness.
 It can be used against data files (pdf, jpgs, unknown binary files).
 
-Version: 1.2.3  
+Version: 1.2.3b  
 ## Codescanner
 
-Last changed: 10. Dec. 2020
+Last changed: 29. Jul. 2021
 
 ### What this is
 

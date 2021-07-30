@@ -3,8 +3,8 @@
 The Codescanner detects machine code in files and identifies the cpu architecture, endianness, and bitness.
 It can be used against data files (pdf, jpgs, unknown binary files).
 
-Version: 1.2.3  
-Last changed: 10. Dec. 2020
+Version: 1.2.3b
+Last changed: 29. Jul. 2021
 
 ## What this contains
 
@@ -28,7 +28,6 @@ In case you want to use it in a commercial project you can write an email.
 
 
 ### Requirements
-* Linux OS
 * Python2 >= 2.7 or Python3 (Warning: Python2 will soon become deprecated.)
 * matplotlib
 * numpy

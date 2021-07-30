@@ -1,13 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <unistd.h> 
 #include <stdint.h>
+#include <stdio.h> 
+#include <string.h>
+#include <stdlib.h>
 #include <cstring>
 #include <vector>
 
 #include "common_shared/shared_codescan.h"
-#include "common_shared/getCSLanguages.c"
-
-#define LANGUAGES_PATH  ("../res/lib/languages/") // <= adjust this
 
 // Compile with:
 
@@ -28,8 +27,8 @@ int main(int argc, char **argv)
     FromTo Fileregion;
     uint32_t status = STATUS_SUCCESS; 
     int n=0,i=0,j=0;
-    //const char * languages;
     const char * finame;
+    char currentDir[512] = {0};
     
     if (argc < 2)
     {
@@ -45,14 +44,22 @@ int main(int argc, char **argv)
     
     status = 0;
     
+    if (getcwd(currentDir, 512) == NULL)
+    {
+        printf("Error getting current dir.\n");
+        return 0;
+    }
+    
+    //printf("%s\n",currentDir);
+    
     // = Some test file. ============================
-    //languages = get_languages_path(argv[0]);
     finame = argv[1];
     
     Fileregion.from = 0; // anything < filesize
     Fileregion.to = 0; // filesize, or anything < filesize
+    
     // fileregion: the to-be-scanned region of a file. 
-    // You *MUST* initialize the file region; at least with zeros.
+    // You MUST initialize the file region; at least with dummy zeros.
     // Initializing with zeros means that you don't want to use custom start and end offsets.
     // Codescanner will then simply scan the whole file, starting at '0' and ending at 'filesize'.
     // 
@@ -62,16 +69,14 @@ int main(int argc, char **argv)
     // sanity checks, e.g., if the file has only 0x5000 bytes, the 
     // CS core will return with an adequate error status code. 
     
-    // First step: language folder location.   (you may have multiple versions :D)
     
-    status = initLangPath(LANGUAGES_PATH); // <= Codescanner needs to be pointed to the languages folder.
-    
-    // You can also use/adapt get_languages_path(argv[0]), found in getCSlangues.c in the common_shared dir.
+    // First step: language folder location. 
+    status = setLangPath(currentDir);
     
     // You can and should always check the status code.
     if (status != STATUS_SUCCESS)
     {
-        printf("language folder path does not seem to be at '%s'.\n",LANGUAGES_PATH);
+        printf("language folder could not be found.\n");
         return 0;
     }
     

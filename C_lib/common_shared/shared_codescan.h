@@ -43,14 +43,12 @@ typedef struct _CodescanOutputPy
 // +Codescanner+
 // 
 // Your first needed routine: 
-// initialize libcodescan.so by telling where your languages directory is. 
-// Important: the directory needs to be named 'languages'.
-// The Codescanner core will not do anything if you do not adhere to this naming rule. ;)
+// initialize libcodescan.so by telling where the Codescanner core binary is (and its languages directory).
 // 
 // Args:
-// 1. param: __in const char * filepathname   <= path to 'languages' directory.
+// 1. param: __in const char * filepathname   <= relative/absolute path to where Codescan core binary is.
 // returns: STATUS_SUCCESS (0) if success, an error code otherwise.
-extern "C" uint32_t initLangPath(const char * CS_Langpath) __attribute__ ((visibility ("default") ));
+extern "C" uint32_t setLangPath(const char * in_codescandir) __attribute__ ((visibility ("default") ));
 
 
 // +Codescanner+
