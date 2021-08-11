@@ -34,13 +34,14 @@ class CodescannerAnalysisData(object):
         '''
         
         self.file_path = file_utils.sanitize_file_name(file_src)
-        self.file_size = os.path.getsize(file_src)
+        self.file_size = os.path.getsize(self.file_path)
 
         start, end = self._sanitize_offset_numbers(start, end)
         
         if (aggressive): # anything not null
             aggressive = 1
-        else: aggressive = 0
+        else:
+            aggressive = 0
 
         self.file_header = FileHeaderParser.get_file_header(self.file_path)
         self._codescanner = CodescanInterface()
@@ -189,6 +190,6 @@ class CodescannerAnalysisData(object):
 
         plotter._offsets = (self._codescanner.start, self._codescanner.end)
         plotter._file_size = self.sizes['FileSize']
-        plotter.update_code_spec_label(self.architecture.get('Full'))
+        plotter.update_code_spec_label(self.regions.get("Code"))
 
         return plotter

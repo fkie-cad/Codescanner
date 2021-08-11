@@ -12,6 +12,7 @@ from plot_base import PlotBase
 # No way to have an X-axis for a couple of bytes only. Applies to both colormap and byteplots.
 MIN_FILE_SIZE = 0x100
 
+
 class ColorMap(PlotBase):
     FIG_SIZE = (16, 3.5)
     filesize = 0

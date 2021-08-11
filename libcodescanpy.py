@@ -124,34 +124,35 @@ def scan(file_src, start=0, end=0, bool_aggressive=0, r_type=RESULT_DICT):
     
     if r_type == RESULT_DICT:
         if c_output.ascii.size > 0:
-            result["Ascii"] = _convert_to_dict(c_output.ascii)
+            result["Ascii"] = _convert_to_dict(c_output.ascii, False)
         if c_output.genericData.size > 0:
-            result["Data"] = _convert_to_dict(c_output.genericData)
+            result["Data"] = _convert_to_dict(c_output.genericData, False)
         if c_output.highEntropy.size > 0:
-            result["HighEntropy"] = _convert_to_dict(c_output.highEntropy)
+            result["HighEntropy"] = _convert_to_dict(c_output.highEntropy, False)
         if c_output.coderegions.size > 0:
-            result["Code"] = _convert_to_dict(c_output.coderegions)
+            result["Code"] = _convert_to_dict(c_output.coderegions, True)
         if c_output.zeroblock.size > 0:
-            result["Zero"] = _convert_to_dict(c_output.zeroblock)
+            result["Zero"] = _convert_to_dict(c_output.zeroblock, False)
             
     elif r_type == RESULT_LIST:
         if c_output.ascii.size > 0:
-            result["Ascii"] = _convert_to_list(c_output.ascii)
+            result["Ascii"] = _convert_to_list(c_output.ascii, False)
         if c_output.genericData.size > 0:
-            result["Data"] = _convert_to_list(c_output.genericData)
+            result["Data"] = _convert_to_list(c_output.genericData, False)
         if c_output.highEntropy.size > 0:
-            result["HighEntropy"] = _convert_to_list(c_output.highEntropy)
+            result["HighEntropy"] = _convert_to_list(c_output.highEntropy, False)
         if c_output.coderegions.size > 0:
-            result["Code"] = _convert_to_list(c_output.coderegions)
+            result["Code"] = _convert_to_list(c_output.coderegions, True)
         if c_output.zeroblock.size > 0:
-            result["Zero"] = _convert_to_list(c_output.zeroblock)
+            result["Zero"] = _convert_to_list(c_output.zeroblock, False)
 
-    if (raw_data_ptr): libcodescan.free_CodescanOutput(raw_data_ptr)
+    if raw_data_ptr:
+        libcodescan.free_CodescanOutput(raw_data_ptr)
 
     return result
 
 
-def _convert_to_dict(cs_region):
+def _convert_to_dict(cs_region, is_code):
     if cs_region.size == 0:
         return ()
 
@@ -159,15 +160,16 @@ def _convert_to_dict(cs_region):
     for i in range(cs_region.size):
         cs_r = cs_region.data[i]
 
+        # bitness, endianess and arch should not be filled, of not a code region
         r = {"from": int(cs_r.start), "to": int(cs_r.end), "bitness": int(cs_r.bitness), "endianess": int(cs_r.endianess), "architecture": cs_r.architecture}
-        if r['architecture'] is not None:
+        if is_code and r['architecture'] is not None:
             r['architecture'] = r['architecture'].decode("utf-8")
         regions.append(r)
 
     return regions
 
 
-def _convert_to_list(cs_region):
+def _convert_to_list(cs_region, is_code):
     if cs_region.size == 0:
         return []
 
@@ -175,7 +177,7 @@ def _convert_to_list(cs_region):
     for i in range(cs_region.size):
         cs_r = cs_region.data[i]
 
-        if cs_r.architecture is not None:
+        if is_code and cs_r.architecture is not None:
             r = [int(cs_r.start), int(cs_r.end), cs_r.architecture.decode("utf-8"), int(cs_r.bitness), int(cs_r.endianess)]
         else:
             r = [int(cs_r.start), int(cs_r.end)]

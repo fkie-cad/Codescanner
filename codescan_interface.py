@@ -142,35 +142,41 @@ class CodescanInterface(object):
             regions['Data'].append((file_size - remainder, file_size))
 
     def extract_architectures(self, regions):
-        
-        if not regions.get(CS_REGION_CODE): return {}
-
-        architecture = {
-            'ISA': 'none',
-            'Bitness': 'none',
-            'Endianess': 'none',
-            'Full': 'none',
-        }
+        '''
+        Fill architecture dict with info out of the first code region
+        :param region:
+        :return: dict
+        '''
+        if not regions.get(CS_REGION_CODE):
+            return {}
 
         cr_0 = regions.get(CS_REGION_CODE)[0]
 
-        architecture["ISA"] = cr_0[2]
-        architecture["Bitness"] = str(cr_0[3]) if cr_0[3] > 0 else ""
-        architecture["Endianess"] = str(cr_0[4]) if cr_0[4] > 0 else ""
-        
-        if cr_0[4] == 1:
-            architecture["Endianess"] = "le"
-        elif cr_0[4] == 2:
-            architecture["Endianess"] = "be"
-        else:
-            architecture["Endianess"] = ""
-            
+        return CodescanInterface.get_architecture(cr_0)
+
+    @staticmethod
+    def get_architecture(region):
+        '''
+        Fill architecture dict with info out of a code region
+        :param region:
+        :return: dict
+        '''
+        if len(region) < 5:
+            return {}
+
+        architecture = {
+            'ISA': region[2],
+            'Bitness': str(region[3]) if region[3] > 0 else "",
+            'Endianess': "le" if region[4] == 1 else "be" if region[4] == 2 else "",
+            'Full': 'none',
+        }
+
         architecture["Full"] = architecture["ISA"]
-        
+
         if architecture["Bitness"]:
             architecture["Full"] = architecture["Full"] + "-" + architecture["Bitness"]
-            
-        if architecture["Endianess"] and cr_0[2] != "Intel":
+
+        if architecture["Endianess"] and region[2] != "Intel":
             architecture["Full"] = architecture["Full"] + "-" + architecture["Endianess"]
 
         return architecture

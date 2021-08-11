@@ -13,8 +13,10 @@ class CodeRegionData(ctypes.Structure):
                 ]
 
 
+# has to mirror original struct
 class HeaderData(ctypes.Structure):
     _fields_ = [("headertype", ctypes.c_uint8),
+                ("h_bitness", ctypes.c_uint8),
                 ("bitness", ctypes.c_uint8),
                 ("endian", ctypes.c_uint8),
                 ("CPU_arch", ctypes.c_uint8),
@@ -69,7 +71,6 @@ def get_basic_info(file_src, start=0, force=0):
     """
     c_file_src = ctypes.c_char_p(file_src.encode("utf-8"))
     raw_result = lib_header_parser.getBasicHeaderParserInfo(c_file_src, start, force)
-
     if not raw_result:
         return get_initialized_hpd()
 

@@ -14,7 +14,7 @@ from byte_plot import BytePlot
 
 
 class OverlayPlot(BytePlot):
-    XAreaSpec = namedtuple('AreaSpec', ['id', 'label', 'color', 'box_color', 'alpha'])
+    XAreaSpec = namedtuple('XAreaSpec', ['id', 'label', 'color', 'box_color', 'alpha'])
     x_spec = XAreaSpec(id='exec', label='', color='#ff0000', box_color='#ffcccc', alpha=0.5)
     text_spec = XAreaSpec(id='.text', label='.text', color='#ff0000', box_color='#ffcccc', alpha=0.75)
 
@@ -191,9 +191,9 @@ class OverlayPlot(BytePlot):
         return spec
 
     def _get_x_legend_label(self, spec):
-        '''
-        Handling legend feature to skip label starting with an '_'.
-        '''
+        """
+        Handling legend "feature" that skips labels starting with an '_' by adding an additional whitespace.
+        """
         label = spec.label
         if label[0] == '_':
             label = " " + label

@@ -9,6 +9,7 @@ from collections import namedtuple
 import matplotlib
 
 import utils.file_utils as file_utils
+from codescan_interface import CodescanInterface
 
 matplotlib.use('agg')
 
@@ -48,11 +49,27 @@ class PlotBase(object):
         self._file_size = os.path.getsize(file_name)
         self._short_filename = os.path.basename(file_name)
 
-    def update_code_spec_label(self, architecture):
+    def update_code_spec_label(self, code_regions):
         '''
-        Update code spec label to an actual architecture.
+        Update code spec label to actual architecture(s).
         '''
-        self._update_spec_label(0, architecture)
+        if not code_regions or len(code_regions) == 0 or len(code_regions[0]) < 5:
+            return
+
+        architectures = set()
+        for r in code_regions:
+            arch = CodescanInterface.get_architecture(r)
+            if arch["Full"]:
+                architectures.add(arch["Full"])
+
+        architectures = list(sorted(architectures))
+        label = ""
+        size = len(architectures)
+        for i in range(size):
+            label = label + architectures[i] + ", "
+        if len(label) > 3:
+            label = label[0:len(label)-2]
+        self._update_spec_label(0, label)
 
     def update_alien_code_spec_label(self, architecture):
         '''

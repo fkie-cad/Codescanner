@@ -4,7 +4,7 @@ The Codescanner detects machine code in files and identifies the cpu architectur
 It can be used against data files (pdf, jpgs, unknown binary files).
 
 Version: 1.2.3b
-Last changed: 29. Jul. 2021
+Last changed: 11. Aug. 2021
 
 ## What this contains
 
@@ -95,8 +95,8 @@ cad.sizes.get("Data")
 cad.sizes.get("HighEntropy")
 cad.sizes.get("FileSize")
 
-for s in sizes: 
-    print("%s : %i" % (s, sizes[s]))
+for s in cad.sizes: 
+    print("%s : %i" % (s, cad.sizes[s]))
 ``` 
 
 #### get cpu architecture dictionary (empty dictionary, if no code exists) ####
@@ -139,8 +139,8 @@ buffer = cad.plot_to_buffer(dpi, plot_type)
 buffer = cad.plot_to_buffer(100)
 ```  
 
-The buffer can then be used elsewhere. For example, it can encoded to 
-base64 and and included as an image in a html-sheet. 
+The buffer can then be used elsewhere. 
+For example, it can be encoded to base64 and then be included as an image in an html-sheet. 
 
 ##### Use of a COLOR_MAP plot #####
 The ColorMap plot may be useful, if the input file is very large, exceeding the plotting capabilities of matplotlib and the users RAM.

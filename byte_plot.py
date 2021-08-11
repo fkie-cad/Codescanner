@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
-import os,sys
+import os
 
 import matplotlib
 import numpy
+
+from codescan_interface import CodescanInterface
 
 matplotlib.use('agg')
 
 from matplotlib.pyplot import legend
 from matplotlib.ticker import MultipleLocator, FuncFormatter
-from pylab import xticks, axvline, figure, sca
+from pylab import xticks, figure, sca
 
 from plot_base import PlotBase
 
 # This is the minimum for which it makes sense to analyze or plot a file.
 # No way to have an X-axis for a couple of bytes only. Applies to both colormap and byteplots.
 MIN_FILE_SIZE = 0x100
+
 
 class BytePlot(PlotBase):
     FIG_SIZE = (16, 8)
@@ -37,7 +40,7 @@ class BytePlot(PlotBase):
         '''
         if (self.filesize < MIN_FILE_SIZE):
             raise IOError("File is too small to even have a proper x-axis!")
-        
+
         if dpi < PlotBase.MIN_DPI:
             raise ValueError("DPI must be at mimimum %d!" % PlotBase.MIN_DPI)
 
@@ -56,10 +59,10 @@ class BytePlot(PlotBase):
         :param height: The desired heigth.
         :return:
         '''
-        
-        if (self.filesize < MIN_FILE_SIZE):
+
+        if self.filesize < MIN_FILE_SIZE:
             raise IOError("File is too small to even have a proper x-axis!")
-        
+
         if dpi < PlotBase.MIN_DPI:
             raise ValueError("DPI must be at mimimum %d!" % PlotBase.MIN_DPI)
         if width == 0:
@@ -84,18 +87,18 @@ class BytePlot(PlotBase):
         return self._plot_to_buffer(dpi, fig_size)
 
     def _plot_to_buffer(self, dpi, fig_size):
-        
+
         if (self.filesize < MIN_FILE_SIZE):
             raise IOError("File is too small to even have a proper x-axis!")
-        
+
         byte_array = self._get_byte_array()
         byte_indices = numpy.arange(0, byte_array.size, dtype=numpy.uint32)
 
         # marker size depends on height of fig
         # prevents visually unpleasant gabs between dots, if fig is stretched in height more than the sum of normal dot size
+        # unused: somehow overwrites markerfacecolor if markersize is set in plot
         # self.ms = self.height / 1.8
-        self.ms = 72./dpi
-
+        self.ms = 72. / dpi
 
         plot = figure(figsize=fig_size)
         subplot = plot.add_subplot(111)  # (Add bottom image)
@@ -124,7 +127,9 @@ class BytePlot(PlotBase):
         for spec in self._area_specs:
             self._plot_byte_regions(subplot, byte_array, byte_indices, spec)
 
-        # subplots_adjust(left=0.05, right=0.98, top=0.92, bottom=0.15, hspace=0.1)
+        if self._regions.get("Code"):
+            for cr in self._regions.get("Code"):
+                self._plot_cr_label(subplot, cr)
 
         self._add_labels(subplot)
 
@@ -146,9 +151,9 @@ class BytePlot(PlotBase):
         ax.yaxis.set_major_formatter(major_formatter_y)
 
     def _plot_byte_regions(self, ax, raw_bytes, byte_indices, area_spec):
-        
+
         if area_spec.id not in self._regions: return
-        
+
         sca(ax)
 
         set_label = True
@@ -174,6 +179,16 @@ class BytePlot(PlotBase):
                         )
             ax.axvline(x=start, ymin=0, ymax=255, linewidth=1.0, color=area_spec.line_color)
             ax.axvline(x=end, ymin=0, ymax=255, linewidth=1.0, color=area_spec.line_color)
+
+    def _plot_cr_label(self, ax, cr):
+        spec = self._area_specs[0]
+        x = cr[0]
+        y = 2
+        label = CodescanInterface.get_architecture(cr)["Full"]
+
+        ax.text(x, y, label, fontsize=10, color='#000000',
+                bbox=dict(facecolor=spec.dot_color, alpha=0.75, pad=1, linewidth=0,
+                          edgecolor='b'))
 
     def _add_labels(self, subplot):
         subplot.set_xlabel('Byte location')

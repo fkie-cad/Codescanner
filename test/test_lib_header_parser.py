@@ -35,13 +35,13 @@ class LibHeaderParserTest(unittest.TestCase):
         #     region = result['regions'][i]
         #     print(" (%d) %s: ( 0x%x - 0x%x )" % (i + 1, region[0].decode('utf-8'), region[1], region[2]))
 
-        assert 9 == result['headertype']
+        assert 10 == result['headertype']
         assert header_parser.lib_header_parser.getHeaderDataHeaderType(result['headertype']) == 'ELF'
         assert 64 == result['bitness']
         assert 1 == result['endian']
-        assert 44 == result['cpu']
+        assert 45 == result['cpu']
         assert 'Intel' == header_parser.lib_header_parser.getHeaderDataArchitecture(result['cpu'])
-        # assert 5 == result['regions_size']
+        assert 5 == result['regions_size']
 
         expected_regions = [
             ('.init', 0xfb0, 0xfca),
@@ -57,11 +57,11 @@ class LibHeaderParserTest(unittest.TestCase):
             assert expected_regions[i][2] == region[2]
 
     def test_arbitray_file(self):
-        file = self.test_file
+        tfile = self.test_file
 
         force = header_parser.FORCE_NONE
 
-        hp_result = header_parser.get_basic_info(file, 0, force)
+        hp_result = header_parser.get_basic_info(tfile, 0, force)
 
         print()
         print(hp_result)

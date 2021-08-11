@@ -7,7 +7,7 @@ from distutils.command.sdist import sdist
 from setuptools import setup
 
 # major, minor, micro, release, serial
-__VERSION_INFO__ = (1, 2, 0, 'final', 0)
+__VERSION_INFO__ = (1, 2, 3, 'final', 0)
 __VERSION__ = '%d.%d' % (__VERSION_INFO__[0], __VERSION_INFO__[1])
 
 
