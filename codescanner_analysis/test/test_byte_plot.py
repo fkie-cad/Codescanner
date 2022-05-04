@@ -9,9 +9,9 @@ from collections import namedtuple
 import pytest
 from _pytest.monkeypatch import MonkeyPatch
 
-from byte_plot import BytePlot
-from plot_base import PlotBase
-from test import helper
+from codescanner_analysis.byte_plot import BytePlot
+from codescanner_analysis.plot_base import PlotBase
+from codescanner_analysis.test import helper
 
 
 class BytePlotTest(unittest.TestCase):

@@ -2,8 +2,8 @@ import os
 import pytest
 import unittest
 
-from codescanner_analysis import CodescannerAnalysisData
-from extended_analysis import make_decision
+from codescanner_analysis.codescanner_analysis import CodescannerAnalysisData
+from codescanner_analysis.extended_analysis import make_decision
 
 
 class FileHeaderParserTest(unittest.TestCase):

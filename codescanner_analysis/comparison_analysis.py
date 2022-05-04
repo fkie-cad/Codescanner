@@ -2,11 +2,10 @@ import os
 import subprocess
 from collections import defaultdict
 
-import header_parser
-import utils.file_utils as file_utils
-import utils.file_to_array as fta
-from codescanner_analysis import CodescannerAnalysisData
-from overlay_plot import OverlayPlot
+from codescanner_analysis import header_parser
+from codescanner_analysis.utils import file_utils, file_to_array as fta
+from codescanner_analysis.codescanner_analysis import CodescannerAnalysisData
+from codescanner_analysis.overlay_plot import OverlayPlot
 
 
 class ComparisonAnalysis(object):

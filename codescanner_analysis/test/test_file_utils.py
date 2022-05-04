@@ -4,7 +4,7 @@ import unittest
 import pytest
 from _pytest.monkeypatch import MonkeyPatch
 
-import utils.file_utils as file_utils
+import codescanner_analysis.utils.file_utils as file_utils
 
 
 class UtilsTest(unittest.TestCase):

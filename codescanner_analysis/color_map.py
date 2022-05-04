@@ -1,4 +1,4 @@
-import os,sys
+import os
 import matplotlib as mpl
 
 mpl.use('agg')
@@ -6,7 +6,7 @@ mpl.use('agg')
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 
-from plot_base import PlotBase
+from codescanner_analysis.plot_base import PlotBase
 
 # This is the minimum for which it makes sense to analyze or plot a file.
 # No way to have an X-axis for a couple of bytes only. Applies to both colormap and byteplots.

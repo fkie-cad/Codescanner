@@ -7,10 +7,10 @@ from _pytest.monkeypatch import MonkeyPatch
 from collections import defaultdict
 from collections import namedtuple
 
-from codescan_interface import CodescanInterface
-from color_map import ColorMap
-from plot_base import PlotBase
-from test import helper
+from codescanner_analysis.codescan_interface import CodescanInterface
+from codescanner_analysis import ColorMap
+from codescanner_analysis import PlotBase
+from codescanner_analysis.test import helper
 
 
 class ColorMapTest(unittest.TestCase):

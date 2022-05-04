@@ -1,7 +1,7 @@
 import numpy as np
 import unittest
 
-import utils.file_to_array as fta
+import codescanner_analysis.utils.file_to_array as fta
 
 
 class FileToArrayTest(unittest.TestCase):

@@ -2,7 +2,7 @@ import os
 import unittest
 
 from codescanner_analysis import CodescannerAnalysisData
-from byte_plot import PlotBase
+from codescanner_analysis import PlotBase
 
 
 class PlotBaseTest(unittest.TestCase):

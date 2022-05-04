@@ -10,7 +10,8 @@ matplotlib.use('agg')
 from matplotlib.pyplot import legend
 from matplotlib.ticker import MultipleLocator, FuncFormatter
 from pylab import xticks, figure, GridSpec
-from byte_plot import BytePlot
+
+from codescanner_analysis.byte_plot import BytePlot
 
 
 class OverlayPlot(BytePlot):

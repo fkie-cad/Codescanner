@@ -4,7 +4,7 @@ import os
 import matplotlib
 import numpy
 
-from codescan_interface import CodescanInterface
+from codescanner_analysis.codescan_interface import CodescanInterface
 
 matplotlib.use('agg')
 
@@ -12,7 +12,7 @@ from matplotlib.pyplot import legend
 from matplotlib.ticker import MultipleLocator, FuncFormatter
 from pylab import xticks, figure, sca
 
-from plot_base import PlotBase
+from codescanner_analysis.plot_base import PlotBase
 
 # This is the minimum for which it makes sense to analyze or plot a file.
 # No way to have an X-axis for a couple of bytes only. Applies to both colormap and byteplots.

@@ -1,6 +1,6 @@
 import os
 
-import utils.file_utils as file_utils
+import codescanner_analysis.utils.file_utils as file_utils
 
 
 class FileHeaderParser(object):
