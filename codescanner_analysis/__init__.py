@@ -10,16 +10,10 @@ from codescanner_analysis.plot_base import PlotBase
 
 
 # major, minor, micro, release, serial
-__VERSION_INFO__ = (1, 2, 3, 'final', 0)
+__VERSION_INFO__ = (1, 3, 0, 'final', 0)
 __VERSION__ = '%d.%d' % (__VERSION_INFO__[0], __VERSION_INFO__[1])
 __all__ = [
     __VERSION__,
-    BytePlot,
     CodescannerAnalysisData,
-    CodescanInterface,
-    ColorMap,
     ComparisonAnalysis,
-    file_header_parser,
-    OverlayPlot,
-    PlotBase,
 ]
