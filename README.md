@@ -3,8 +3,8 @@
 The Codescanner detects machine code in files and identifies the cpu architecture, endianness, and bitness.
 It can be used against data files (pdf, jpgs, unknown binary files).
 
-Version: 1.2.3b
-Last changed: 11. Aug. 2021
+Version: 1.3.0  
+Last changed: 10. May 2022
 
 ## What this contains
 
@@ -32,39 +32,19 @@ In case you want to use it in a commercial project you can write an email.
 * matplotlib
 * numpy
 
-### (Optional) Use pip to install all required dependencies
-```sh
-sudo -EH pip install -r requirements.txt
-```
 
 ### Installation ###
 ```bash
-sudo python setup.py uninstall -a  # <= do this if you have previous versions installed.
-sudo python setup.py install 
+sudo pip install . 
 ```
+The installation works as well without `sudo` for the current user.
 
-### Clean up unnecessary installation file leftovers in the download directory ###
-```bash
-sudo python setup.py clean -a 
-```
 
 ### Deinstallation ###
-To uninstall the *current* version (of the currently downloaded package):
 ```bash
-sudo python setup.py uninstall 
+sudo pip uninstall codescanner_analysis
 ```
-
-To uninstall all installed versions:
-```bash
-sudo python setup.py uninstall -a
-```
-
-The workflow to update to a newer version is:
-```bash
-sudo python setup.py uninstall -a
-sudo python setup.py install 
-sudo python setup.py clean -a 
-```
+Skip the `sudo`, if codescanner_analysis was installed without it, i.e. just for the current user.
 
 
 ### Usage ###
@@ -157,7 +137,7 @@ This can be useful to see if the binary has a strange/unusual layout.
 Examples of potential interest: packed/dropper, ROM files, and other manipulation.
 
 ```python
-from comparison_analysis import ComparisonAnalysis as COMA
+from codescanner_analysis.comparison_analysis import ComparisonAnalysis as COMA
 coma = COMA(filepathname)
 
 # This will (try to) overlay code regions of header with code regions of Codescanner.
