@@ -1,10 +1,10 @@
 import numpy
 import os
 import pytest
-import tempfile
+from tempfile import TemporaryDirectory
 import unittest
 
-from file_header_parser import FileHeaderParser
+from codescanner_analysis.file_header_parser import FileHeaderParser
 
 
 class FileHeaderParserTest(unittest.TestCase):
@@ -34,39 +34,33 @@ class FileHeaderParserTest(unittest.TestCase):
         assert header == 'ELF'
 
     def test_get_pe_file_header(self):
-        temp_dir = tempfile.gettempdir()
-        bin_src = os.path.join(temp_dir, 'FileHeaderParserTest_test_get_pe_file_header.exe')
-        self._create_file(bin_src, 0x200, FileHeaderParser.MAGIC_PE_FILE_BYTES)
+        with TemporaryDirectory() as temp_dir:
+            bin_src = os.path.join(temp_dir, 'FileHeaderParserTest_test_get_pe_file_header.exe')
+            self._create_file(bin_src, 0x200, FileHeaderParser.MAGIC_PE_FILE_BYTES)
 
-        header = FileHeaderParser.get_file_header(bin_src)
+            header = FileHeaderParser.get_file_header(bin_src)
 
-        assert header == 'PE'
-
-        os.remove(bin_src)
+            assert header == 'PE'
 
     def test_get_undefined_file_header(self):
-        temp_dir = tempfile.gettempdir()
-        bin_src = os.path.join(temp_dir, 'FileHeaderParserTest_test_get_pe_file_header.exe')
-        self._create_file(bin_src, 0x200, bytearray(b'\xba\xd4\xea\xda'))
+        with TemporaryDirectory() as temp_dir:
+            bin_src = os.path.join(temp_dir, 'FileHeaderParserTest_test_get_pe_file_header.exe')
+            self._create_file(bin_src, 0x200, bytearray(b'\xba\xd4\xea\xda'))
 
-        header = FileHeaderParser.get_file_header(bin_src)
+            header = FileHeaderParser.get_file_header(bin_src)
 
-        assert header is None
-
-        os.remove(bin_src)
+            assert header is None
 
     def test_get_too_small_file(self):
-        temp_dir = tempfile.gettempdir()
-        bin_src = os.path.join(temp_dir, 'FileHeaderParserTest_test_get_too_small_file.exe')
+        with TemporaryDirectory() as temp_dir:
+            bin_src = os.path.join(temp_dir, 'FileHeaderParserTest_test_get_too_small_file.exe')
 
-        with open(bin_src, 'wb') as f:
-            f.write(bytearray(b'\x00\x00\x00'))
+            with open(bin_src, 'wb') as f:
+                f.write(bytearray(b'\x00\x00\x00'))
 
-        header = FileHeaderParser.get_file_header(bin_src)
+            header = FileHeaderParser.get_file_header(bin_src)
 
-        assert header is None
-
-        os.remove(bin_src)
+            assert header is None
 
     def _create_file(self, name, size, magic):
         pe_bytes = numpy.random.bytes(size - 4)

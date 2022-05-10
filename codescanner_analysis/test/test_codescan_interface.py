@@ -1,10 +1,8 @@
 import collections
 import os
-import pytest
 import unittest
 
-import codescan
-from codescan_interface import CodescanInterface
+from codescanner_analysis import CodescanInterface
 
 
 class CodescanInterfaceTest(unittest.TestCase):
@@ -14,10 +12,6 @@ class CodescanInterfaceTest(unittest.TestCase):
         cls.test_file_dir = os.path.join(root_dir, 'test', 'data')
         cls.test_binary = os.path.join(cls.test_file_dir, 'testfile')
         cls.codescanner = CodescanInterface()
-
-        cls.libcodescan_src = os.path.join(root_dir, 'res/lib', 'libcodescanpy.so')
-        lang_path = os.path.join(root_dir, 'res/lib/', 'languages')
-        codescan.init(cls.libcodescan_src, lang_path)
 
     def test_sanitize_regions(self):
         regions = self.codescanner.run(self.test_binary)
@@ -77,6 +71,7 @@ class CodescanInterfaceTest(unittest.TestCase):
         start = 0x800
         end = 0x4000
         regions = self.codescanner.run(self.test_binary, start, end)
+        regions = self.codescanner.sanitize_regions(regions)
         e = {'Data': [[0, 1024], [2048, 6656], [9728, 14336]], 'Zero': [[6656, 9728]], 'Ascii': [[1024, 2048]]}
 
         assert regions == e

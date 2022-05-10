@@ -8,8 +8,8 @@ from collections import namedtuple
 
 import matplotlib
 
-import utils.file_utils as file_utils
-from codescan_interface import CodescanInterface
+import codescanner_analysis.utils.file_utils as file_utils
+from codescanner_analysis.codescan_interface import CodescanInterface
 
 matplotlib.use('agg')
 

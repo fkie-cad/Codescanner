@@ -1,7 +1,7 @@
 import unittest
 import os
 
-import header_parser
+from codescanner_analysis import header_parser
 
 
 class LibHeaderParserTest(unittest.TestCase):
@@ -36,11 +36,11 @@ class LibHeaderParserTest(unittest.TestCase):
         #     print(" (%d) %s: ( 0x%x - 0x%x )" % (i + 1, region[0].decode('utf-8'), region[1], region[2]))
 
         assert 10 == result['headertype']
-        assert header_parser.lib_header_parser.getHeaderDataHeaderType(result['headertype']) == 'ELF'
+        assert header_parser.lib_header_parser.getHeaderDataHeaderType(result['headertype']) == b'ELF'
         assert 64 == result['bitness']
         assert 1 == result['endian']
         assert 45 == result['cpu']
-        assert 'Intel' == header_parser.lib_header_parser.getHeaderDataArchitecture(result['cpu'])
+        assert header_parser.lib_header_parser.getHeaderDataArchitecture(result['cpu']) == b'Intel'
         assert 5 == result['regions_size']
 
         expected_regions = [

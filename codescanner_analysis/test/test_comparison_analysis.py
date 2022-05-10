@@ -1,9 +1,11 @@
 import os
+from tempfile import TemporaryDirectory
+
 import pytest
 import tempfile
 import unittest
 
-from comparison_analysis import ComparisonAnalysis
+from codescanner_analysis.comparison_analysis import ComparisonAnalysis
 
 
 class ComparisonAnalysisTest(unittest.TestCase):
@@ -77,30 +79,25 @@ class ComparisonAnalysisTest(unittest.TestCase):
             ca.plot_to_file("filename.png")
 
     def test_no_header_found_plotting(self):
-        temp_dir = tempfile.gettempdir()
-        plot_src = os.path.join(temp_dir, 'ComparisonAnalysisTest-test_no_header_found_plotting.png')
+        with TemporaryDirectory() as temp_dir:
+            plot_src = os.path.join(temp_dir, 'ComparisonAnalysisTest-test_no_header_found_plotting.png')
 
-        ca = ComparisonAnalysis(self.test_binary_src)
-        ca.x_regions = {}
+            ca = ComparisonAnalysis(self.test_binary_src)
+            ca.x_regions = {}
 
-        ca.plot_to_file(plot_src)
+            ca.plot_to_file(plot_src)
 
-        assert os.path.isfile(plot_src)
-
-        os.remove(plot_src)
+            assert os.path.isfile(plot_src)
 
     def test_plot_to_file(self):
-        temp_dir = tempfile.gettempdir()
-        # temp_dir = self.test_file_dir
-        plot_png = os.path.join(temp_dir, 'ComparisonAnalysisTest-test_plot_to_file.png')
+        with TemporaryDirectory() as temp_dir:
+            plot_png = os.path.join(temp_dir, 'ComparisonAnalysisTest-test_plot_to_file.png')
 
-        # code labels with underscore
-        ca = ComparisonAnalysis('~/bin/libc.so.6-0')
-        ca.plot_to_file(plot_png)
+            # code labels with underscore
+            ca = ComparisonAnalysis(self.test_binary_src)
+            ca.plot_to_file(plot_png)
 
-        assert os.path.isfile(plot_png)
-
-        os.remove(plot_png)
+            assert os.path.isfile(plot_png)
 
     def test_are_code_regions_in_file(self):
         ca = ComparisonAnalysis(self.test_binary_src)

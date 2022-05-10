@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
-import libcodescanpy  # (libcodescanpy.py)
+from codescanner_analysis import libcodescanpy
 
 CS_REGION_CODE = "Code"
 CS_REGION_DATA = "Data"

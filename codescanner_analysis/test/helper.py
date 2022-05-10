@@ -4,7 +4,7 @@ import numpy
 
 from PIL import Image
 
-from codescan_interface import CodescanInterface
+from codescanner_analysis.codescan_interface import CodescanInterface
 
 MAGIC_PNG_BYTES = b'\x89\x50\x4e\x47\x0D\x0A\x1A\x0A'
 

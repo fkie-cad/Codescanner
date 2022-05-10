@@ -4,10 +4,10 @@ import tempfile
 import unittest
 
 from codescanner_analysis import CodescannerAnalysisData
-from byte_plot import BytePlot
-from color_map import ColorMap
-from plot_base import PlotBase
-from test import helper
+from codescanner_analysis import BytePlot
+from codescanner_analysis import ColorMap
+from codescanner_analysis import PlotBase
+from codescanner_analysis.test import helper
 
 
 class CodescannerAnalysisDataTest(unittest.TestCase):
@@ -211,7 +211,7 @@ class CodescannerAnalysisDataTest(unittest.TestCase):
         # temp_dir = self.test_file_dir
         img_path = os.path.join(temp_dir, 'CodescannerAnalysisDataTest-test_plot_to_file_byte_plot_big_file.png')
         expected_size = (dpi * BytePlot.FIG_SIZE[0], dpi * BytePlot.FIG_SIZE[1])
-        big_file = temp_dir+"big.bin"
+        big_file = os.path.join(temp_dir, "big.bin")
         helper.create_random_file(big_file, (10 * 1024 * 1024))  # 10 mb
 
         cad = CodescannerAnalysisData(big_file)
@@ -309,7 +309,7 @@ class CodescannerAnalysisDataTest(unittest.TestCase):
         start = 144640
         end = 184320
 
-        cad = CodescannerAnalysisData(self._test_binary_src, start, end)
+        cad = CodescannerAnalysisData(self.test_medium_binary_src, start, end)
         cad.plot_to_file(str(img_path), dpi, cad.BYTE_PLOT)
         cad.plot_to_file(str(bar_path), dpi, cad.COLOR_MAP)
 

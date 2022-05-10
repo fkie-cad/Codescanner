@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 import os
 
-import utils.file_utils as file_utils
-from codescan_interface import CodescanInterface
-from color_map import ColorMap
-from extended_analysis import make_decision
-from file_header_parser import FileHeaderParser
-from byte_plot import BytePlot
-# from plot_base import PlotBase
+from codescanner_analysis.utils import file_utils
+from codescanner_analysis.codescan_interface import CodescanInterface
+from codescanner_analysis.color_map import ColorMap
+from codescanner_analysis.extended_analysis import make_decision
+from codescanner_analysis.file_header_parser import FileHeaderParser
+from codescanner_analysis.byte_plot import BytePlot
 
 
 class CodescannerAnalysisData(object):
