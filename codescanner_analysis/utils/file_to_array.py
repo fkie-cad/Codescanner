@@ -5,6 +5,9 @@
 import numpy as np
 import os
 
+# (temporary) for numpy getlimits warning
+np.finfo(np.dtype("float64"))
+
 
 def loadInts(finame, starts=0, ends=0):
     if not os.path.isfile(finame):
