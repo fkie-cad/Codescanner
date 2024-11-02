@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools >= 61.0", "matplotlib"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "codescanner_analysis"
+description = "Analysis module to classify regions of arbitrary binaries"
+authors = [
+  {name = "Fraunhofer FKIE CA&D"},
+  {name = "Viviane Zwanger", email = "viviane.zwanger@fkie.fraunhofer.de"},
+  {name = "Henning Braun", email = "henning.braun@fkie.fraunhofer.de"},
+]
+dynamic = ["version"]
+keywords = ["codescanner", "code regions"]
+license = {text = "Fraunhofer non-commercial License 'Codescanner'"}
+dependencies = ["matplotlib", "numpy"]
+requires-python = ">=3.8"
+
+
+[project.urls]
+repository = "https://github.com/fkie-cad/Codescanner"
+
+[tool.setuptools]
+packages = ["codescanner_analysis"]
+
+[tool.setuptools.dynamic]
+version = {attr = "codescanner_analysis.__VERSION__"}
+
+[tool.setuptools.package-data]
+codescanner_analysis = ["res/lib/codescan", "res/lib/*.so", "res/lib/languages/*.lang"]
+
