@@ -21,7 +21,7 @@ requires-python = ">=3.8"
 repository = "https://github.com/fkie-cad/Codescanner"
 
 [tool.setuptools]
-packages = ["codescanner_analysis"]
+packages = ["codescanner_analysis", "codescanner_analysis.utils"]
 
 [tool.setuptools.dynamic]
 version = {attr = "codescanner_analysis.__VERSION__"}
